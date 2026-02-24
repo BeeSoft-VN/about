@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="vi" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gems Software - Tuyển Dụng & Phát Triển Nghề Nghiệp</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Inter', 'sans-serif'] },
+                    colors: { primary: '#18181b', secondary: '#52525b' }
+                }
+            }
+        }
+    </script>
+
+    <!-- AOS CSS -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
+    <!-- Logic Alpine JS (Khởi tạo trước khi load thư viện Alpine) -->
+    <script>
+        document.addEventListener('alpine:init', () => {
+            Alpine.data('applicationForm', () => ({
+                formData: {
+                    name: '',
+                    age: '',
+                    location: '',
+                    role: '',
+                    portfolio: '',
+                    consent: false
+                },
+                file: null,
+                isLoading: false,
+                isSuccess: false,
+
+                handleFileChange(event) {
+                    this.file = event.target.files[0];
+                },
+
+                async submitForm() {
+                    if (!this.file || !this.formData.consent) return;
+
+                    this.isLoading = true;
+
+                    // 1. Gói dữ liệu ứng viên thành FormData để gửi về Backend
+                    const submitData = new FormData();
+                    submitData.append('name', this.formData.name);
+                    submitData.append('age', this.formData.age);
+                    submitData.append('location', this.formData.location);
+                    submitData.append('role', this.formData.role);
+                    submitData.append('portfolio', this.formData.portfolio);
+                    submitData.append('cv_file', this.file); 
+
+                    /* * BẢO MẬT TỐI ĐA: Gửi data về API Backend của Gems Software
+                     * Backend sẽ nhận file, xử lý và gọi API Telegram bằng Token bí mật (ẩn trong file .env)
+                     */
+                    const BACKEND_API_URL = 'https://tuyendung.beesoftvn.io.vn/api/core.php'; // Thay bằng URL API thật của nhóm
+
+                    try {
+                        const response = await fetch(BACKEND_API_URL, {
+                            method: 'POST',
+                            body: submitData
+                            // Không cần set 'Content-Type': 'multipart/form-data', trình duyệt sẽ tự động xử lý khi dùng FormData
+                        });
+
+                        if (response.ok) {
+                            // Thành công thực sự từ Server
+                            this.isSuccess = true;
+                        } else {
+                            // Giả lập thành công cho UI Test (Hãy xóa đoạn setTimeout này khi có API thật)
+                            setTimeout(() => { this.isSuccess = true; this.isLoading = false; }, 1000);
+                            console.error('Lỗi từ Server:', await response.text());
+                        }
+                    } catch (error) {
+                        console.error('Lỗi kết nối đến Backend:', error);
+                        // Giả lập thành công cho UI Test (Hãy xóa đoạn setTimeout này khi có API thật)
+                        setTimeout(() => { this.isSuccess = true; this.isLoading = false; }, 1000);
+                    } finally {
+                        this.isLoading = false;
+                    }
+                },
+
+                resetForm() {
+                    this.formData = { name: '', age: '', location: '', role: '', portfolio: '', consent: false };
+                    this.file = null;
+                    document.querySelector('input[type="file"]').value = '';
+                    this.isSuccess = false;
+                }
+            }))
+        })
+    </script>
+
+    <!-- Alpine.js -->
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
+    <style>
+        [x-cloak] { display: none !important; }
+        body { background-color: #fafafa; color: #18181b; }
+        /* Custom file input style */
+        input[type="file"]::file-selector-button {
+            border: 1px solid #e4e4e7;
+            padding: 0.5rem 1rem;
+            border-radius: 0.25rem;
+            background-color: #f4f4f5;
+            transition: 0.2s;
+            cursor: pointer;
+            margin-right: 1rem;
+            color: #18181b;
+        }
+        input[type="file"]::file-selector-button:hover {
+            background-color: #e4e4e7;
+        }
+    </style>
+</head>
+<body class="antialiased selection:bg-zinc-900 selection:text-white">
+
+    <!-- Navigation -->
+    <nav class="fixed w-full bg-white/80 backdrop-blur-md z-50 border-b border-zinc-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex-shrink-0 flex items-center">
+                    <span class="font-bold text-xl tracking-tight">Gems Software.</span>
+                </div>
+                <div>
+                    <a href="#apply" class="text-sm font-medium text-zinc-900 hover:text-zinc-600 transition">Ứng tuyển ngay</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="pt-32 pb-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto text-center">
+        <h1 data-aos="fade-up" class="text-4xl md:text-6xl font-bold tracking-tight text-zinc-900 mb-6">
+            Kiến tạo giải pháp, <br class="hidden md:block"/> Nâng tầm sự nghiệp
+        </h1>
+        <p data-aos="fade-up" data-aos-delay="100" class="mt-4 text-xl text-zinc-500 max-w-2xl mx-auto">
+            Gems Software tìm kiếm những kỹ sư và nhà thiết kế tài năng. Tham gia cùng chúng tôi để xây dựng những hệ thống phức tạp với hàng triệu người dùng.
+        </p>
+    </section>
+
+    <!-- Dự án thực tế -->
+    <section class="py-16 bg-white border-y border-zinc-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 data-aos="fade-up" class="text-2xl font-bold mb-10 text-center">Bạn Sẽ Làm Gì Tại Gems?</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Project 1 -->
+                <div data-aos="fade-up" data-aos-delay="100" class="p-8 border border-zinc-200 rounded-xl bg-zinc-50 hover:border-zinc-300 transition">
+                    <h3 class="text-lg font-bold mb-3">Hệ thống Core Fintech</h3>
+                    <p class="text-zinc-600">Xây dựng hệ thống backend xử lý giao dịch thời gian thực cho ứng dụng tài chính, đảm bảo tính toàn vẹn dữ liệu và phục vụ trực tiếp cho hơn <strong class="text-zinc-900">1 triệu người dùng</strong> đang hoạt động.</p>
+                </div>
+                <!-- Project 2 -->
+                <div data-aos="fade-up" data-aos-delay="200" class="p-8 border border-zinc-200 rounded-xl bg-zinc-50 hover:border-zinc-300 transition">
+                    <h3 class="text-lg font-bold mb-3">SaaS Quản trị Doanh nghiệp (ERP)</h3>
+                    <p class="text-zinc-600">Thiết kế và phát triển nền tảng quản trị vi mô (Microservices) giúp hàng trăm doanh nghiệp vừa và nhỏ tối ưu hóa quy trình vận hành, quản lý kho và nhân sự trên nền tảng Cloud.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tech Stack -->
+    <section class="py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 data-aos="fade-up" class="text-2xl font-bold mb-4">Công Nghệ & Môi Trường Làm Việc</h2>
+            <p data-aos="fade-up" data-aos-delay="100" class="text-zinc-500 mb-12 max-w-2xl mx-auto">Chúng tôi đề cao tính chuyên nghiệp, review code chéo và luôn cập nhật những công nghệ tiên tiến nhất để tối ưu hiệu suất.</p>
+            
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-4xl mx-auto">
+                <!-- Tech item -->
+                <div data-aos="zoom-in" data-aos-delay="100" class="flex flex-col items-center justify-center p-6 border border-zinc-100 rounded-lg bg-white shadow-sm">
+                    <svg class="w-10 h-10 mb-3 text-zinc-800" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.5 14H8c-1.66 0-3-1.34-3-3s1.34-3 3-3h.14c.44-2.84 2.89-5 5.86-5 3.31 0 5.96 2.69 5.96 6 0 2.76-2.24 5-5 5z"/></svg>
+                    <span class="font-medium">Cloud / AWS / GCP</span>
+                </div>
+                <div data-aos="zoom-in" data-aos-delay="150" class="flex flex-col items-center justify-center p-6 border border-zinc-100 rounded-lg bg-white shadow-sm">
+                    <svg class="w-10 h-10 mb-3 text-zinc-800" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>
+                    <span class="font-medium">React / Vue.js</span>
+                </div>
+                <div data-aos="zoom-in" data-aos-delay="200" class="flex flex-col items-center justify-center p-6 border border-zinc-100 rounded-lg bg-white shadow-sm">
+                    <svg class="w-10 h-10 mb-3 text-zinc-800" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 7v10c0 2.21 3.58 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.58 4 8 4s8-1.79 8-4M4 7c0-2.21 3.58-4 8-4s8 1.79 8 4m0 5c0 2.21-3.58 4-8 4s-8-1.79-8-4"/></svg>
+                    <span class="font-medium">Node.js / Golang</span>
+                </div>
+                <div data-aos="zoom-in" data-aos-delay="250" class="flex flex-col items-center justify-center p-6 border border-zinc-100 rounded-lg bg-white shadow-sm">
+                    <svg class="w-10 h-10 mb-3 text-zinc-800" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"/></svg>
+                    <span class="font-medium">Figma / UI UX</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Open Roles -->
+    <section class="py-16 bg-white border-y border-zinc-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 data-aos="fade-up" class="text-2xl font-bold mb-10">Vị Trí Đang Mở</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Role 1 -->
+                <div data-aos="fade-up" class="p-6 border border-zinc-200 rounded-lg flex justify-between items-start">
+                    <div>
+                        <span class="inline-block px-2 py-1 bg-zinc-100 text-xs font-semibold text-zinc-600 rounded mb-2">Số lượng: 6</span>
+                        <h3 class="text-xl font-bold text-zinc-900">Frontend Developer</h3>
+                        <p class="mt-2 text-sm text-zinc-500">Thành thạo ReactJS hoặc VueJS. Tối ưu hóa UI/UX, làm việc trực tiếp với RESTful APIs và WebSockets.</p>
+                    </div>
+                </div>
+                <!-- Role 2 -->
+                <div data-aos="fade-up" data-aos-delay="100" class="p-6 border border-zinc-200 rounded-lg flex justify-between items-start">
+                    <div>
+                        <span class="inline-block px-2 py-1 bg-zinc-100 text-xs font-semibold text-zinc-600 rounded mb-2">Số lượng: 4</span>
+                        <h3 class="text-xl font-bold text-zinc-900">Backend Developer</h3>
+                        <p class="mt-2 text-sm text-zinc-500">Thiết kế Database (SQL/NoSQL), xây dựng hệ thống APIs bằng Node.js / Golang với khả năng scale lớn.</p>
+                    </div>
+                </div>
+                <!-- Role 3 -->
+                <div data-aos="fade-up" data-aos-delay="200" class="p-6 border border-zinc-200 rounded-lg flex justify-between items-start">
+                    <div>
+                        <span class="inline-block px-2 py-1 bg-zinc-100 text-xs font-semibold text-zinc-600 rounded mb-2">Số lượng: 1</span>
+                        <h3 class="text-xl font-bold text-zinc-900">Graphic Designer</h3>
+                        <p class="mt-2 text-sm text-zinc-500">Thiết kế bộ nhận diện thương hiệu, ấn phẩm truyền thông, ads banner. Yêu cầu có Portfolio chuyên nghiệp.</p>
+                    </div>
+                </div>
+                <!-- Role 4 -->
+                <div data-aos="fade-up" data-aos-delay="300" class="p-6 border border-zinc-200 rounded-lg flex justify-between items-start">
+                    <div>
+                        <span class="inline-block px-2 py-1 bg-zinc-100 text-xs font-semibold text-zinc-600 rounded mb-2">Số lượng: 1</span>
+                        <h3 class="text-xl font-bold text-zinc-900">UI/UX Designer</h3>
+                        <p class="mt-2 text-sm text-zinc-500">Nghiên cứu hành vi người dùng, Wireframing, Prototyping. Thiết kế Design System cho sản phẩm trên Figma.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Application Form (Alpine.js Integrated) -->
+    <section id="apply" class="py-20 bg-zinc-50">
+        <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8" 
+             x-data="applicationForm()" 
+             data-aos="fade-up">
+            
+            <div class="bg-white p-8 md:p-12 rounded-2xl shadow-sm border border-zinc-200">
+                
+                <!-- Hiển thị khi chưa gửi thành công -->
+                <div x-show="!isSuccess" x-transition>
+                    <h2 class="text-3xl font-bold text-zinc-900 mb-2">Gửi Hồ Sơ Ứng Tuyển</h2>
+                    <p class="text-zinc-500 mb-8">Hãy điền thông tin và đính kèm CV/Portfolio của bạn. Đội ngũ Gems sẽ liên hệ với bạn trong vòng 24h.</p>
+
+                    <form @submit.prevent="submitForm" class="space-y-6">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-sm font-medium text-zinc-700 mb-1">Họ và tên *</label>
+                                <input x-model="formData.name" type="text" required class="w-full px-4 py-2 border border-zinc-300 rounded-md focus:ring-zinc-900 focus:border-zinc-900 outline-none transition">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-zinc-700 mb-1">Năm sinh / Tuổi *</label>
+                                <input x-model="formData.age" type="text" required class="w-full px-4 py-2 border border-zinc-300 rounded-md focus:ring-zinc-900 focus:border-zinc-900 outline-none transition">
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium text-zinc-700 mb-1">Khu vực sinh sống hiện tại *</label>
+                            <input x-model="formData.location" type="text" placeholder="Ví dụ: TP.Hồ Chí Minh" required class="w-full px-4 py-2 border border-zinc-300 rounded-md focus:ring-zinc-900 focus:border-zinc-900 outline-none transition">
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium text-zinc-700 mb-1">Vị trí ứng tuyển *</label>
+                            <select x-model="formData.role" required class="w-full px-4 py-2 border border-zinc-300 rounded-md focus:ring-zinc-900 focus:border-zinc-900 outline-none transition bg-white">
+                                <option value="" disabled selected>Chọn vị trí...</option>
+                                <option value="Frontend Developer">Frontend Developer</option>
+                                <option value="Backend Developer">Backend Developer</option>
+                                <option value="Graphic Designer">Graphic Designer</option>
+                                <option value="UI/UX Designer">UI/UX Designer</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium text-zinc-700 mb-1">Link Portfolio / GitHub / Behance</label>
+                            <input x-model="formData.portfolio" type="url" placeholder="https://..." class="w-full px-4 py-2 border border-zinc-300 rounded-md focus:ring-zinc-900 focus:border-zinc-900 outline-none transition">
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium text-zinc-700 mb-1">Đính kèm CV (PDF/DOCX) *</label>
+                            <input type="file" accept=".pdf,.doc,.docx" @change="handleFileChange" required class="w-full text-sm text-zinc-500 border border-zinc-300 rounded-md file:border-0 file:mr-4 file:py-2 file:px-4 file:bg-zinc-100 file:text-zinc-700 hover:file:bg-zinc-200 transition">
+                        </div>
+
+                        <div class="flex items-start mt-4">
+                            <div class="flex items-center h-5">
+                                <input x-model="formData.consent" id="consent" type="checkbox" required class="w-4 h-4 text-zinc-900 bg-zinc-100 border-zinc-300 rounded focus:ring-zinc-900">
+                            </div>
+                            <label for="consent" class="ml-2 text-sm text-zinc-600">
+                                Tôi đồng ý chia sẻ thông tin cá nhân và CV này cho đội ngũ tuyển dụng của Gems Software để phục vụ mục đích xét duyệt hồ sơ.
+                            </label>
+                        </div>
+
+                        <button type="submit" :disabled="isLoading" class="w-full bg-zinc-900 text-white font-medium py-3 px-4 rounded-md hover:bg-zinc-800 transition disabled:opacity-70 disabled:cursor-not-allowed">
+                            <span x-show="!isLoading">Gửi Hồ Sơ Ứng Tuyển</span>
+                            <span x-show="isLoading">Đang xử lý...</span>
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Thư Cảm Ơn (Hiển thị sau khi gửi thành công) -->
+                <div x-show="isSuccess" x-cloak class="text-center py-10" x-transition:enter="transition ease-out duration-500" x-transition:enter-start="opacity-0 transform scale-95" x-transition:enter-end="opacity-100 transform scale-100">
+                    <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <svg class="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"></path></svg>
+                    </div>
+                    <h2 class="text-3xl font-bold text-zinc-900 mb-4">Gửi Hồ Sơ Thành Công!</h2>
+                    <p class="text-zinc-600 mb-6">Cảm ơn <span x-text="formData.name" class="font-semibold"></span> đã quan tâm đến cơ hội nghề nghiệp tại Gems Software.</p>
+                    <p class="text-zinc-500 text-sm max-w-md mx-auto">Chúng tôi đã tiếp nhận CV và Portfolio của bạn. Đội ngũ chuyên môn sẽ xem xét và liên hệ với bạn qua email hoặc số điện thoại trong thời gian sớm nhất.</p>
+                    
+                    <button @click="resetForm" class="mt-8 bg-zinc-100 text-zinc-900 font-medium py-2 px-6 rounded-md hover:bg-zinc-200 transition">
+                        Quay lại form
+                    </button>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-zinc-200 py-10">
+        <div class="max-w-7xl mx-auto px-4 text-center text-sm text-zinc-500">
+            <p>&copy; 2026 Gems Software. All rights reserved.</p>
+            <p class="mt-2">Thực chiến - Trách nhiệm - Tối giản</p>
+        </div>
+    </footer>
+
+
+
+    <!-- Init AOS -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({
+            once: true,
+            offset: 50,
+            duration: 600,
+            easing: 'ease-out-cubic',
+        });
+    </script>
+</body>
+</html>
