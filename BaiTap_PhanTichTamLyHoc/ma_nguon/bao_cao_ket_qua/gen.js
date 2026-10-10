@@ -1,0 +1,112 @@
+const B=require("./base.js");
+const {Document,Packer,Paragraph,AlignmentType,BorderStyle,ShadingType,LevelFormat,TextRun,
+ PW,PH,ML,MR,MT,MB,CW,FONT,SZ,SZ_H1,C,T,sp,PB,body,note,keypt,tocEntry,
+ twoColTable,threeColTable,makeHeader,makeFooter,hutechHeader}=B;
+const fs=require("fs");
+const { hutechCover, hutechCoverPageProps } = require("./hutech_cover.js");
+const _COVER = {
+  logoPath: require("path").join(__dirname,"img","hutech_ngang.png"),
+  loaiTaiLieu: "BÁO CÁO KẾT QUẢ MÔN HỌC.",
+  tenDeTai: "PHÂN TÍCH DỮ LIỆU TÂM LÝ HỌC SỬ DỤNG AI\nĐỀ TÀI: STUDENT DEPRESSION DATASET.",
+  nganh: "Trí tuệ nhân tạo ứng dụng.",
+  gvhd: "……………………………………",
+  sinhVien: [
+    ["……………………………………","……………………","……………………"],
+    ["……………………………………","……………………","……………………"],
+    ["……………………………………","……………………","……………………"],
+    ["……………………………………","……………………","……………………"],
+    ["……………………………………","……………………","……………………"]
+  ],
+  nam: "2026",
+};
+
+const TITLE="BÁO CÁO KẾT QUẢ", TOPIC="PHÂN TÍCH DỮ LIỆU TÂM LÝ HỌC SỬ DỤNG AI";
+const STD="IEEE Std 1063-2001", YEAR="2026";
+const doc=new Document({
+ numbering:{config:[
+  {reference:"b1",levels:[{level:0,format:LevelFormat.BULLET,text:"•",alignment:AlignmentType.LEFT,
+   style:{paragraph:{indent:{left:720,hanging:360}}}}]},
+  {reference:"n1",levels:[{level:0,format:LevelFormat.DECIMAL,text:"%1.",alignment:AlignmentType.LEFT,
+   style:{paragraph:{indent:{left:700,hanging:340}}}}]}]},
+ styles:{default:{document:{run:{font:FONT,size:SZ}}},
+  paragraphStyles:[
+   {id:"Heading1",name:"Heading 1",basedOn:"Normal",next:"Normal",quickFormat:true,
+    run:{size:SZ_H1,bold:true,font:FONT,color:C.white},paragraph:{spacing:{before:240,after:200},outlineLevel:0}},
+   {id:"Heading2",name:"Heading 2",basedOn:"Normal",next:"Normal",quickFormat:true,
+    run:{size:28,bold:true,font:FONT,color:C.accent},paragraph:{spacing:{before:200,after:120},outlineLevel:1}},
+   {id:"Heading3",name:"Heading 3",basedOn:"Normal",next:"Normal",quickFormat:true,
+    run:{size:28,bold:true,font:FONT,color:C.navy},paragraph:{spacing:{before:160,after:80},outlineLevel:2}}]},
+ sections:[
+ { properties: hutechCoverPageProps(), children: hutechCover(_COVER) },
+ {
+  properties:{page:{size:{width:PW,height:PH},margin:{top:MT,right:MR,bottom:MB,left:ML}}},
+  headers:{default:makeHeader(`BÁO CÁO KẾT QUẢ  |  ${STD}`)},
+  footers:{default:makeFooter("Báo cáo kết quả — Phân tích dữ liệu tâm lý học sử dụng AI")},
+  children:[
+
+
+/* ══ MỤC LỤC ══ */
+new Paragraph({children:[new TextRun({text:"MỤC LỤC",font:FONT,size:36,bold:true,color:C.black})],
+ alignment:AlignmentType.CENTER,
+ border:{bottom:{style:BorderStyle.SINGLE,size:6,color:C.border,space:8}},spacing:{before:0,after:340}}),
+tocEntry("PHỤ LỤC — TÀI LIỆU THAM KHẢO",4,0),
+tocEntry("CHƯƠNG I: GIỚI THIỆU NHÓM VÀ ĐỀ TÀI",5,0),
+tocEntry("1.1  Thành viên nhóm và phân công",5,1),
+tocEntry("1.2  Lý do chọn đề tài",5,1),
+tocEntry("1.3  Câu hỏi nghiên cứu",6,1),
+tocEntry("1.4  Cấu trúc báo cáo",6,1),
+tocEntry("CHƯƠNG II: CÔNG CỤ AI ĐÃ SỬ DỤNG",6,0),
+tocEntry("2.1  Danh mục công cụ",7,1),
+tocEntry("2.2  Quy trình năm bước có AI hỗ trợ",7,1),
+tocEntry("2.3  Câu lệnh mẫu đã dùng",7,1),
+tocEntry("2.4  Cách nhóm kiểm chứng kết quả của AI",8,1),
+tocEntry("CHƯƠNG III: GIỚI THIỆU BỘ DỮ LIỆU",6,0),
+tocEntry("3.1  Nguồn gốc và quy mô",10,1),
+tocEntry("3.2  Cấu trúc 18 biến",10,1),
+tocEntry("3.3  Kết quả khám phá dữ liệu",11,1),
+tocEntry("CHƯƠNG IV: QUÁ TRÌNH XỬ LÝ DỮ LIỆU",6,0),
+tocEntry("4.1  Hai chỉ số cơ bản: rất sạch",14,1),
+tocEntry("4.2  Bốn vấn đề phát hiện được",14,1),
+tocEntry("4.3  Sáu bước tiền xử lý",15,1),
+tocEntry("4.4  Kết quả sau xử lý",16,1),
+tocEntry("CHƯƠNG V: KẾT QUẢ PHÂN TÍCH",6,0),
+tocEntry("5.1  Áp lực học tập và áp lực tài chính",17,1),
+tocEntry("5.2  Xếp hạng toàn bộ yếu tố",18,1),
+tocEntry("5.3  Lối sống: giấc ngủ và dinh dưỡng",19,1),
+tocEntry("5.4  Tuổi và cường độ học tập",20,1),
+tocEntry("5.5  Tương tác giữa hai yếu tố",20,1),
+tocEntry("5.6  Hiệu ứng cộng dồn — phát hiện trung tâm",21,1),
+tocEntry("5.7  Kiểm chứng bằng mô hình dự báo",22,1),
+tocEntry("CHƯƠNG VI: CÁC NHẬN ĐỊNH VÀ KẾT LUẬN",23,0),
+tocEntry("6.1  Sáu nhận định chính",23,1),
+tocEntry("6.2  Đề xuất ứng dụng thực tế",23,1),
+tocEntry("6.3  Hạn chế của nghiên cứu",23,1),
+tocEntry("6.4  Đạo đức nghiên cứu",24,1),
+tocEntry("6.5  Kết luận",24,1),
+tocEntry("6.6  Hướng phát triển",25,1),
+PB(),
+
+/* ══ PHỤ LỤC IEEE (đặt TRƯỚC các chương) ══ */
+new Paragraph({children:[T("PHỤ LỤC — TÀI LIỆU THAM KHẢO",{size:SZ_H1,bold:true,color:C.white})],
+ shading:{fill:C.headBg,type:ShadingType.CLEAR},spacing:{before:0,after:200},outlineLevel:0}),
+twoColTable([
+ ["[1]","IEEE Std 1063-2001, \"IEEE Standard for Software User Documentation,\" IEEE, 2001."],
+ ["[2]","Student Depression Dataset, Kaggle, 2024. Bộ dữ liệu gốc dùng trong báo cáo này."],
+ ["[3]","J. W. Tukey, \"Exploratory Data Analysis,\" Addison-Wesley, 1977."],
+ ["[4]","H. Wickham, \"Tidy Data,\" Journal of Statistical Software, vol. 59, no. 10, 2014."],
+ ["[5]","J. Cohen, \"Statistical Power Analysis for the Behavioral Sciences,\" 2nd ed., Lawrence Erlbaum, 1988."],
+ ["[6]","E. R. Tufte, \"The Visual Display of Quantitative Information,\" 2nd ed., Graphics Press, 2001."],
+ ["[7]","S. Kaufman et al., \"Leakage in Data Mining: Formulation, Detection, and Avoidance,\" ACM TKDD, vol. 6, no. 4, 2012."],
+ ["[8]","American Psychological Association, \"Ethical Principles of Psychologists and Code of Conduct,\" APA, 2017."],
+ ["[9]","W. McKinney, \"Data Structures for Statistical Computing in Python,\" Proc. 9th Python in Science Conf., 2010."],
+ ["[10]","F. Pedregosa et al., \"Scikit-learn: Machine Learning in Python,\" JMLR, vol. 12, 2011."],
+],800,CW-800,["Ref.","Nguồn tài liệu"]),
+PB(),
+
+...require("./ch_a.js"),
+...require("./ch_b.js"),
+...require("./ch_c.js"),
+...require("./ch_d.js"),
+]}]});
+const OUT=process.argv[2]||"/tmp/bc.docx";
+Packer.toBuffer(doc).then(b=>{fs.writeFileSync(OUT,b);console.log("Done →",OUT);});
