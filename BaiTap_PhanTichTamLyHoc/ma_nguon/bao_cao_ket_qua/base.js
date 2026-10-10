@@ -11,9 +11,9 @@ const CW = PW - ML - MR;
 const FONT = "Times New Roman";
 const SZ = 28, SZ_H1 = 32, SZ_H2 = 28, SZ_CODE = 22;
 const C = {
-  black:"000000", navy:"1B2A4A", accent:"2563EB", gray:"595959", grayBg:"F2F2F2",
-  white:"FFFFFF", codeBg:"1E293B", codeText:"E2E8F0", border:"BFBFBF",
-  headBg:"1F4E79", exBg:"EBF5FB", green:"375623", orange:"843C0C", red:"922B21",
+  black:"000000", navy:"000000", accent:"000000", gray:"595959", grayBg:"F2F2F2",
+  white:"FFFFFF", codeBg:"262626", codeText:"F2F2F2", border:"BFBFBF",
+  headBg:"000000", exBg:"F2F2F2", green:"000000", orange:"000000", red:"000000",
 };
 const T = (text,o={}) => new TextRun({ text:String(text), font:FONT, size:SZ, ...o });
 const MONO = (text) => new TextRun({ text:String(text), font:"Courier New", size:SZ_CODE, color:C.codeText });
@@ -24,14 +24,18 @@ const body = (text, after=120) => new Paragraph({
   children:[T(text,{color:C.black})], alignment:AlignmentType.JUSTIFIED,
   spacing:{after, line:360, lineRule:"auto"} });
 
+/* Luu y: chu nghieng, co vien trai de phan biet ma khong can mau */
 const note = (text) => new Paragraph({
-  children:[T("⚠ Lưu ý: ",{bold:true,color:C.orange}), T(text,{italics:true})],
-  spacing:{before:80,after:120}, indent:{left:360},
+  children:[T("Lưu ý: ",{bold:true}), T(text,{italics:true})],
+  spacing:{before:90,after:130}, indent:{left:300},
+  border:{left:{style:BorderStyle.SINGLE,size:12,color:"595959",space:10}},
   alignment:AlignmentType.JUSTIFIED });
 
+/* Diem chinh: chu dam tren nen xam nhat */
 const keypt = (text) => new Paragraph({
-  children:[T("✔ ",{bold:true,color:C.green}), T(text,{bold:true,color:C.navy})],
-  spacing:{before:80,after:120}, indent:{left:360},
+  children:[T(text,{bold:true})],
+  shading:{fill:"F2F2F2",type:ShadingType.CLEAR},
+  spacing:{before:100,after:130}, indent:{left:200,right:200},
   alignment:AlignmentType.JUSTIFIED });
 
 const H1 = (r,t) => new Paragraph({ heading:HeadingLevel.HEADING_1,
@@ -138,7 +142,7 @@ function hutechHeader(khoa) {
       alignment: AlignmentType.CENTER, spacing:{ before:0, after:90 } }),
     new Paragraph({
       children:[ T("TRƯỜNG ĐẠI HỌC CÔNG NGHỆ TP. HỒ CHÍ MINH",
-        { size:26, bold:true, color:"0057A8" }) ],
+        { size:26, bold:true, color:"000000" }) ],
       alignment: AlignmentType.CENTER, spacing:{ after:40 } }),
     new Paragraph({
       children:[ T(khoa, { size:23, color:"595959" }) ],

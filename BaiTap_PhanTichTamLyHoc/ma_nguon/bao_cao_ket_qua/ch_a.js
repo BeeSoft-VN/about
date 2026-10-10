@@ -13,7 +13,7 @@ threeColTable([
  ["3","……………………………………","Tiền xử lý dữ liệu, viết Chương IV"],
  ["4","……………………………………","Trực quan hóa, vẽ toàn bộ biểu đồ"],
  ["5","……………………………………","Phân tích kết quả, kiểm chứng số liệu"],
-],[600,3200,CW-3800],["STT","Họ và tên","Nhiệm vụ phụ trách"]),
+],[760,3200,CW-3960],["STT","Họ và tên","Nhiệm vụ phụ trách"]),
 note("Nhóm điền tên thành viên vào bảng trên trước khi nộp."),
 twoColTable([
  ["Lớp","……………………………………"],

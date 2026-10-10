@@ -2,10 +2,10 @@ const B=require("./base.js");
 const {Paragraph,AlignmentType,ShadingType,TextRun,CW,FONT,SZ_H1,C,T,sp,PB,body,note,keypt,
   H2,H3,codeBlock,bull,twoColTable,threeColTable}=B;
 const A=(id,ten)=>new Paragraph({children:[T(`Bài ${id} — ${ten}`,{size:28,bold:true,color:C.white})],
-  shading:{fill:"1F4E79",type:ShadingType.CLEAR},spacing:{before:200,after:110},outlineLevel:1});
+  shading:{fill:"000000",type:ShadingType.CLEAR},spacing:{before:200,after:110},outlineLevel:1});
 module.exports=[
 new Paragraph({children:[T("PHỤ LỤC — ĐÁP ÁN THAM KHẢO",{size:SZ_H1,bold:true,color:C.white})],
-  shading:{fill:"5B2C6F",type:ShadingType.CLEAR},spacing:{before:0,after:160},outlineLevel:0}),
+  shading:{fill:"000000",type:ShadingType.CLEAR},spacing:{before:0,after:160},outlineLevel:0}),
 note("Phần này dành cho giảng viên. Nếu phát tài liệu cho người học tự làm, hãy xóa phụ lục này trước khi in."),
 body("Mọi con số dưới đây được tính lại bằng Python trên chính hai tệp dữ liệu kèm theo, không lấy từ trí nhớ hay từ câu trả lời của trợ lý AI. Riêng các bài thuộc cấp Thử thách không có đáp án cố định nên chỉ nêu tiêu chí đánh giá."),
 

@@ -3,7 +3,7 @@ const SD_G="student_depression_GOC.csv", SD_C="student_depression_CLEANED.csv";
 const AS_G="asd_treEm_GOC.csv", AS_C="asd_treEm_CLEANED.csv";
 module.exports=[
 ...capHeading("3","NÂNG CAO — Tư duy phản biện với dữ liệu",
- "Năm bài này dạy điều khó nhất: nghi ngờ đúng chỗ. Bạn sẽ học cách phát hiện những lỗi mà mắt thường và cả AI đều bỏ qua — biến nhân bản, rò rỉ nhãn, và kết quả chỉ đúng trên một phần dữ liệu.","922B21"),
+ "Năm bài này dạy điều khó nhất: nghi ngờ đúng chỗ. Bạn sẽ học cách phát hiện những lỗi mà mắt thường và cả AI đều bỏ qua — biến nhân bản, rò rỉ nhãn, và kết quả chỉ đúng trên một phần dữ liệu.","000000"),
 
 ...baiTap({id:"11",ten:"Phát hiện biến nhân bản",cap:"Nâng cao",duLieu:AS_C,thoiGian:"75 phút",
  boiCanh:"Bộ dữ liệu trẻ tự kỷ có bảy cột ghi nhận bảy rối loạn đi kèm khác nhau: chậm nói, khó học, chậm phát triển trí tuệ, vấn đề hành vi, lo âu, trầm cảm, rối loạn gen. Nhìn qua đây là mỏ vàng để nghiên cứu bệnh đi kèm. Hãy kiểm tra trước khi phân tích.",
@@ -91,7 +91,7 @@ PB(),
 PB(),
 
 ...capHeading("4","THỬ THÁCH — Tổng hợp và phản biện",
- "Ba bài cuối không có đáp án duy nhất. Chúng mô phỏng công việc thật: bạn nhận một bài phân tích và phải đánh giá nó, hoặc tự làm trọn vẹn một dự án từ đầu đến cuối và bảo vệ kết quả trước người phản biện.","5B2C6F"),
+ "Ba bài cuối không có đáp án duy nhất. Chúng mô phỏng công việc thật: bạn nhận một bài phân tích và phải đánh giá nó, hoặc tự làm trọn vẹn một dự án từ đầu đến cuối và bảo vệ kết quả trước người phản biện.","000000"),
 
 ...baiTap({id:"16",ten:"Phản biện một bài phân tích",cap:"Thử thách",duLieu:"Bài của nhóm khác hoặc bài mẫu trong repo",thoiGian:"90 phút",
  boiCanh:"Trong thực tế, kỹ năng đọc và phản biện một bài phân tích của người khác quan trọng không kém kỹ năng tự làm. Bài này bạn đóng vai người phản biện khó tính.",

@@ -3,7 +3,7 @@ const SD_G="student_depression_GOC.csv", SD_C="student_depression_CLEANED.csv";
 const AS_G="asd_treEm_GOC.csv", AS_C="asd_treEm_CLEANED.csv";
 module.exports=[
 ...capHeading("1","CƠ BẢN — Làm quen với dữ liệu và với AI",
- "Năm bài đầu không đòi hỏi kiến thức thống kê. Mục tiêu là bạn mở được tệp dữ liệu, đặt được câu hỏi đúng cho AI, và quan trọng nhất — hình thành thói quen chạy lại mã để kiểm chứng mọi con số.","1F4E79"),
+ "Năm bài đầu không đòi hỏi kiến thức thống kê. Mục tiêu là bạn mở được tệp dữ liệu, đặt được câu hỏi đúng cho AI, và quan trọng nhất — hình thành thói quen chạy lại mã để kiểm chứng mọi con số.","000000"),
 
 ...baiTap({id:"1",ten:"Mô tả bộ dữ liệu",cap:"Cơ bản",duLieu:SD_G,thoiGian:"30 phút",
  boiCanh:"Bạn vừa nhận một tệp dữ liệu lạ. Việc đầu tiên luôn là trả lời câu hỏi “trong tay mình đang có gì”.",
@@ -77,7 +77,7 @@ PB(),
 PB(),
 
 ...capHeading("2","TRUNG BÌNH — Kỹ năng cốt lõi",
- "Năm bài tiếp theo là những kỹ năng bạn sẽ dùng trong mọi bài phân tích: săn lỗi dữ liệu, xây quy trình làm sạch, so sánh giữa các nhóm và xếp hạng yếu tố. Cần biết dùng pandas ở mức cơ bản.","1C7293"),
+ "Năm bài tiếp theo là những kỹ năng bạn sẽ dùng trong mọi bài phân tích: săn lỗi dữ liệu, xây quy trình làm sạch, so sánh giữa các nhóm và xếp hạng yếu tố. Cần biết dùng pandas ở mức cơ bản.","000000"),
 
 ...baiTap({id:"6",ten:"Săn giá trị lạc chỗ",cap:"Trung bình",duLieu:SD_G,thoiGian:"45 phút",
  boiCanh:"Bộ dữ liệu này gần như không có ô khuyết và không có dòng trùng, nên rất dễ bị coi là sạch. Nhưng có một cột chứa những giá trị hoàn toàn không thuộc về nó.",
