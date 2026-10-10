@@ -62,9 +62,19 @@ const cards=(s,items,cols,y0,ch,gap)=>{
       margin:0,isTextBox:true,lineSpacing:12.5});
   }); };
 
+
+/* ── Logo HUTECH tren slide tieu de ── */
+const _lp = path.join(__dirname, "img", "hutech_ngang.png");
+function hutechBadge(sl) {
+  sl.addShape(pres.ShapeType.roundRect, { x:M+0.3, y:0.52, w:2.62, h:0.78,
+    fill:{color:"FFFFFF"}, rectRadius:0.08, line:{type:"none"}, objectName:"hutech_card" });
+  sl.addImage({ path:_lp, x:M+0.44, y:0.68, w:2.34, h:0.46 });
+}
+
 /* ───── 1. TITLE ───── */
 pres.addSection({title:"Mở đầu"});
 let s=pres.addSlide({masterName:"TITLE_DARK",sectionTitle:"Mở đầu"});
+hutechBadge(s);
 s.addText("MÔN TRÍ TUỆ NHÂN TẠO ỨNG DỤNG",{placeholder:"eyebrow"});
 s.addText("Ứng dụng AI trong phân tích dữ liệu",{placeholder:"title"});
 s.addText([{text:"Bài giảng dành cho người mới bắt đầu — không yêu cầu kiến thức nền",

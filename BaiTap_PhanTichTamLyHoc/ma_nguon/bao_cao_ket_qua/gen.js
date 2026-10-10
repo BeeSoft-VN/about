@@ -1,8 +1,25 @@
 const B=require("./base.js");
 const {Document,Packer,Paragraph,AlignmentType,BorderStyle,ShadingType,LevelFormat,TextRun,
  PW,PH,ML,MR,MT,MB,CW,FONT,SZ,SZ_H1,C,T,sp,PB,body,note,keypt,tocEntry,
- twoColTable,threeColTable,makeHeader,makeFooter}=B;
+ twoColTable,threeColTable,makeHeader,makeFooter,hutechHeader}=B;
 const fs=require("fs");
+const { hutechCover, hutechCoverPageProps } = require("./hutech_cover.js");
+const _COVER = {
+  logoPath: require("path").join(__dirname,"img","hutech_ngang.png"),
+  loaiTaiLieu: "BÁO CÁO KẾT QUẢ MÔN HỌC.",
+  tenDeTai: "PHÂN TÍCH DỮ LIỆU TÂM LÝ HỌC SỬ DỤNG AI\nĐỀ TÀI: STUDENT DEPRESSION DATASET.",
+  nganh: "Trí tuệ nhân tạo ứng dụng.",
+  gvhd: "……………………………………",
+  sinhVien: [
+    ["……………………………………","……………………","……………………"],
+    ["……………………………………","……………………","……………………"],
+    ["……………………………………","……………………","……………………"],
+    ["……………………………………","……………………","……………………"],
+    ["……………………………………","……………………","……………………"]
+  ],
+  nam: "2026",
+};
+
 const TITLE="BÁO CÁO KẾT QUẢ", TOPIC="PHÂN TÍCH DỮ LIỆU TÂM LÝ HỌC SỬ DỤNG AI";
 const STD="IEEE Std 1063-2001", YEAR="2026";
 const doc=new Document({
@@ -19,34 +36,14 @@ const doc=new Document({
     run:{size:28,bold:true,font:FONT,color:C.accent},paragraph:{spacing:{before:200,after:120},outlineLevel:1}},
    {id:"Heading3",name:"Heading 3",basedOn:"Normal",next:"Normal",quickFormat:true,
     run:{size:28,bold:true,font:FONT,color:C.navy},paragraph:{spacing:{before:160,after:80},outlineLevel:2}}]},
- sections:[{
+ sections:[
+ { properties: hutechCoverPageProps(), children: hutechCover(_COVER) },
+ {
   properties:{page:{size:{width:PW,height:PH},margin:{top:MT,right:MR,bottom:MB,left:ML}}},
   headers:{default:makeHeader(`BÁO CÁO KẾT QUẢ  |  ${STD}`)},
   footers:{default:makeFooter("Báo cáo kết quả — Phân tích dữ liệu tâm lý học sử dụng AI")},
   children:[
 
-/* ══ TRANG BÌA ══ */
-sp(520),
-new Paragraph({children:[T("MÔN TRÍ TUỆ NHÂN TẠO ỨNG DỤNG",{size:24,bold:true,color:C.gray})],
- alignment:AlignmentType.CENTER,spacing:{after:60}}),
-new Paragraph({children:[T(TITLE,{size:42,bold:true,color:C.navy})],
- alignment:AlignmentType.CENTER,spacing:{after:70}}),
-new Paragraph({children:[T(TOPIC,{size:34,bold:true,color:C.accent})],
- alignment:AlignmentType.CENTER,shading:{fill:C.exBg,type:ShadingType.CLEAR},spacing:{before:80,after:80}}),
-new Paragraph({children:[T("Đề tài: Student Depression Dataset — 27.901 sinh viên · 18 biến",
- {size:26,color:C.gray,italics:true})],alignment:AlignmentType.CENTER,spacing:{after:260}}),
-twoColTable([
- ["Phiên bản","1.0"],
- ["Chuẩn tài liệu",STD],
- ["Bộ dữ liệu","Student Depression Dataset — Kaggle"],
- ["Nhóm thực hiện","Nhóm ……  ·  Lớp ……………………"],
- ["Giảng viên hướng dẫn","……………………………………"],
- ["Năm học",YEAR],
- ["Phân loại","Bài tập môn học"],
-],3200,CW-3200),
-sp(220),
-body("Tóm tắt: Báo cáo trình bày toàn bộ quá trình phân tích bộ dữ liệu Student Depression gồm 27.901 sinh viên và 18 biến, sử dụng trợ lý AI hỗ trợ ở khâu khám phá và sinh mã, nhưng kiểm chứng mọi con số bằng Python. Khâu tiền xử lý phát hiện bốn nhóm lỗi mà quan sát bề mặt không thấy được, trong đó đáng kể nhất là 26 ô trong cột Thành phố chứa tên người và chuỗi lỗi lệch cột. Kết quả phân tích cho thấy áp lực học tập và áp lực tài chính liên quan mạnh hơn hẳn tiền sử gia đình, trong khi điểm học tập và giới tính gần như không liên quan. Phát hiện trung tâm là hiệu ứng cộng dồn: tỷ lệ trầm cảm đi từ 4,5% ở nhóm không có yếu tố nguy cơ nào lên 98,6% ở nhóm đủ năm yếu tố."),
-PB(),
 
 /* ══ MỤC LỤC ══ */
 new Paragraph({children:[new TextRun({text:"MỤC LỤC",font:FONT,size:36,bold:true,color:C.black})],

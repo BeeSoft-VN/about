@@ -1,8 +1,25 @@
 const B=require("./base.js");
 const {Document,Packer,Paragraph,AlignmentType,BorderStyle,ShadingType,LevelFormat,TextRun,
  PW,PH,ML,MR,MT,MB,CW,FONT,SZ,SZ_H1,C,T,sp,PB,body,note,keypt,H1,H2,H3,tocEntry,
- codeBlock,bull,twoColTable,threeColTable,makeHeader,makeFooter,img}=B;
+ codeBlock,bull,twoColTable,threeColTable,makeHeader,makeFooter,img,hutechHeader}=B;
 const fs=require("fs"), path=require("path");
+const { hutechCover, hutechCoverPageProps } = require("./hutech_cover.js");
+const _COVER = {
+  logoPath: require("path").join(__dirname,"img","hutech_ngang.png"),
+  loaiTaiLieu: "BÁO CÁO KHÁM PHÁ DỮ LIỆU (EDA).",
+  tenDeTai: "PHÂN TÍCH KHÁM PHÁ BỘ DỮ LIỆU\nSTUDENT DEPRESSION DATASET.",
+  nganh: "Trí tuệ nhân tạo ứng dụng.",
+  gvhd: "……………………………………",
+  sinhVien: [
+    ["……………………………………","……………………","……………………"],
+    ["……………………………………","……………………","……………………"],
+    ["……………………………………","……………………","……………………"],
+    ["……………………………………","……………………","……………………"],
+    ["……………………………………","……………………","……………………"]
+  ],
+  nam: "2026",
+};
+
 const IMG=n=>path.join(__dirname,"img",n+".png");
 const TITLE="BÁO CÁO KHÁM PHÁ DỮ LIỆU";
 const DS="Student Depression Dataset";
@@ -21,63 +38,41 @@ const doc=new Document({
     run:{size:SZ_H1,bold:true,font:FONT,color:C.white},paragraph:{spacing:{before:240,after:200},outlineLevel:0}},
    {id:"Heading2",name:"Heading 2",basedOn:"Normal",next:"Normal",quickFormat:true,
     run:{size:28,bold:true,font:FONT,color:C.accent},paragraph:{spacing:{before:200,after:120},outlineLevel:1}}]},
- sections:[{
+ sections:[
+ { properties: hutechCoverPageProps(), children: hutechCover(_COVER) },
+ {
   properties:{page:{size:{width:PW,height:PH},margin:{top:MT,right:MR,bottom:MB,left:ML}}},
   headers:{default:makeHeader(`${TITLE} — ${DS}`)},
   footers:{default:makeFooter("Báo cáo khám phá dữ liệu (EDA) — Student Depression Dataset")},
   children:[
 
-/* ══ BÌA ══ */
-sp(560),
-new Paragraph({children:[T("MÔN TRÍ TUỆ NHÂN TẠO ỨNG DỤNG",{size:24,bold:true,color:C.gray})],
- alignment:AlignmentType.CENTER,spacing:{after:60}}),
-new Paragraph({children:[T(TITLE,{size:40,bold:true,color:C.navy})],
- alignment:AlignmentType.CENTER,spacing:{after:20}}),
-new Paragraph({children:[T("Exploratory Data Analysis — EDA",{size:24,italics:true,color:C.gray})],
- alignment:AlignmentType.CENTER,spacing:{after:70}}),
-new Paragraph({children:[T("STUDENT DEPRESSION DATASET",{size:40,bold:true,color:C.accent})],
- alignment:AlignmentType.CENTER,shading:{fill:C.exBg,type:ShadingType.CLEAR},spacing:{before:80,after:80}}),
-new Paragraph({children:[T("27.901 sinh viên  ·  18 biến  ·  502.218 ô dữ liệu",{size:26,color:C.gray,italics:true})],
- alignment:AlignmentType.CENTER,spacing:{after:260}}),
-twoColTable([
- ["Tệp phân tích","student_depression_GOC.csv (bản chưa xử lý)"],
- ["Nguồn","Kaggle — Student Depression Dataset"],
- ["Mục đích","Trả lời yêu cầu 1 của đề bài: phân tích khám phá dữ liệu"],
- ["Công cụ","Python 3 · pandas · scipy · matplotlib; trợ lý AI hỗ trợ đặt câu hỏi khám phá"],
- ["Nguyên tắc","Mọi con số trong báo cáo đều do mã Python tạo ra và đã được chạy lại để đối chiếu"],
- ["Người thực hiện","……………………………………"],
- ["Ngày lập báo cáo","……………………………………"],
-],3000,CW-3000),
-sp(220),
-body("Tóm tắt điều hành: Bộ dữ liệu có 27.901 bản ghi và 18 biến, gần như không có giá trị khuyết (3 ô, chiếm 0,011%) và không có bản ghi trùng lặp. Tuy nhiên, khảo sát chi tiết phát hiện bốn vấn đề chất lượng cần xử lý trước khi phân tích: ba cột gần như hằng số, 28 giá trị nằm ngoài thang đo, 65 nhãn rác dạng “Others”, và 26 ô trong cột Thành phố chứa dữ liệu lạc chỗ. Về mối quan hệ, ba yếu tố liên quan mạnh nhất tới trầm cảm là ý định tự tử, áp lực học tập và áp lực tài chính; ngược lại điểm trung bình học tập và giới tính gần như không liên quan. Các biến độc lập hầu như không tương quan với nhau, nên không có vấn đề đa cộng tuyến."),
-PB(),
 
 /* ══ MỤC LỤC ══ */
 new Paragraph({children:[new TextRun({text:"MỤC LỤC",font:FONT,size:36,bold:true,color:C.black})],
  alignment:AlignmentType.CENTER,
  border:{bottom:{style:BorderStyle.SINGLE,size:6,color:C.border,space:8}},spacing:{before:0,after:340}}),
-tocEntry("1. MỤC TIÊU VÀ PHƯƠNG PHÁP",3,0),
-tocEntry("2. TỔNG QUAN BỘ DỮ LIỆU",4,0),
-tocEntry("2.1  Quy mô và cấu trúc",4,1),
-tocEntry("2.2  Danh mục 18 biến",4,1),
-tocEntry("3. ĐÁNH GIÁ CHẤT LƯỢNG DỮ LIỆU",6,0),
-tocEntry("3.1  Giá trị khuyết và bản ghi trùng",6,1),
-tocEntry("3.2  Bốn vấn đề phát hiện được",6,1),
-tocEntry("4. PHÂN TÍCH ĐƠN BIẾN",8,0),
-tocEntry("4.1  Biến số: thống kê mô tả",8,1),
-tocEntry("4.2  Phân bố bốn biến số chính",8,1),
-tocEntry("4.3  Phát hiện ngoại lai",9,1),
-tocEntry("4.4  Biến phân loại",10,1),
-tocEntry("4.5  Biến mục tiêu",11,1),
-tocEntry("5. PHÂN TÍCH HAI BIẾN",12,0),
-tocEntry("5.1  Biến số so với biến mục tiêu",12,1),
-tocEntry("5.1.1  Biểu đồ phân tán: vì sao CGPA không phân biệt được",13,2),
-tocEntry("5.2  Biến phân loại so với biến mục tiêu",14,1),
-tocEntry("5.2.1  Biểu đồ phân tán cấp thành phố",15,2),
-tocEntry("5.3  Tương quan giữa các biến độc lập",17,1),
-tocEntry("5.3.1  Bảng xếp hạng tổng hợp",18,2),
-tocEntry("6. NHẬN ĐỊNH VÀ ĐỀ XUẤT BƯỚC TIẾP THEO",19,0),
-tocEntry("7. HẠN CHẾ CỦA BƯỚC KHÁM PHÁ",21,0),
+tocEntry("1. MỤC TIÊU VÀ PHƯƠNG PHÁP",4,0),
+tocEntry("2. TỔNG QUAN BỘ DỮ LIỆU",5,0),
+tocEntry("2.1  Quy mô và cấu trúc",5,1),
+tocEntry("2.2  Danh mục 18 biến",5,1),
+tocEntry("3. ĐÁNH GIÁ CHẤT LƯỢNG DỮ LIỆU",7,0),
+tocEntry("3.1  Giá trị khuyết và bản ghi trùng",7,1),
+tocEntry("3.2  Bốn vấn đề phát hiện được",7,1),
+tocEntry("4. PHÂN TÍCH ĐƠN BIẾN",9,0),
+tocEntry("4.1  Biến số: thống kê mô tả",9,1),
+tocEntry("4.2  Phân bố bốn biến số chính",9,1),
+tocEntry("4.3  Phát hiện ngoại lai",10,1),
+tocEntry("4.4  Biến phân loại",11,1),
+tocEntry("4.5  Biến mục tiêu",12,1),
+tocEntry("5. PHÂN TÍCH HAI BIẾN",13,0),
+tocEntry("5.1  Biến số so với biến mục tiêu",13,1),
+tocEntry("5.1.1  Biểu đồ phân tán: vì sao CGPA không phân biệt được",14,2),
+tocEntry("5.2  Biến phân loại so với biến mục tiêu",15,1),
+tocEntry("5.2.1  Biểu đồ phân tán cấp thành phố",16,2),
+tocEntry("5.3  Tương quan giữa các biến độc lập",18,1),
+tocEntry("5.3.1  Bảng xếp hạng tổng hợp",19,2),
+tocEntry("6. NHẬN ĐỊNH VÀ ĐỀ XUẤT BƯỚC TIẾP THEO",20,0),
+tocEntry("7. HẠN CHẾ CỦA BƯỚC KHÁM PHÁ",22,0),
 PB(),
 
 /* ══ 1 ══ */

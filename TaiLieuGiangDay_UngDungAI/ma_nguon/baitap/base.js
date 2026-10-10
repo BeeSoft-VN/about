@@ -177,3 +177,24 @@ module.exports.capHeading = capHeading;
 module.exports.diemTable = diemTable;
 module.exports.Table = Table; module.exports.TableRow = TableRow;
 module.exports.WidthType = WidthType; module.exports.mkCell = mkCell;
+
+/* ── Logo HUTECH tren trang bia ── */
+const { ImageRun: _IR } = require("docx");
+const _fs2 = require("fs"), _path2 = require("path");
+function hutechHeader(khoa) {
+  const p = _path2.join(__dirname, "img", "hutech.png");
+  return [
+    new Paragraph({
+      children:[ new _IR({ type:"png", data:_fs2.readFileSync(p),
+        transformation:{ width: 96, height: 111 } }) ],
+      alignment: AlignmentType.CENTER, spacing:{ before:0, after:90 } }),
+    new Paragraph({
+      children:[ T("TRƯỜNG ĐẠI HỌC CÔNG NGHỆ TP. HỒ CHÍ MINH",
+        { size:26, bold:true, color:"0057A8" }) ],
+      alignment: AlignmentType.CENTER, spacing:{ after:40 } }),
+    new Paragraph({
+      children:[ T(khoa, { size:23, color:"595959" }) ],
+      alignment: AlignmentType.CENTER, spacing:{ after:240 } }),
+  ];
+}
+module.exports.hutechHeader = hutechHeader;

@@ -1,8 +1,23 @@
 const B=require("./base.js");
 const {Document,Packer,Paragraph,AlignmentType,BorderStyle,ShadingType,LevelFormat,TextRun,
  PW,PH,ML,MR,MT,MB,CW,FONT,SZ,SZ_H1,C,T,sp,PB,body,note,keypt,H2,tocEntry,
- twoColTable,threeColTable,makeHeader,makeFooter}=B;
+ twoColTable,threeColTable,makeHeader,makeFooter,hutechHeader}=B;
 const fs=require("fs");
+const { hutechCover, hutechCoverPageProps } = require("./hutech_cover.js");
+const _COVER = {
+  logoPath: require("path").join(__dirname,"img","hutech_ngang.png"),
+  loaiTaiLieu: "TẬP BÀI TẬP ỨNG DỤNG.",
+  tenDeTai: "ỨNG DỤNG AI TRONG PHÂN TÍCH DỮ LIỆU\nTỪ CƠ BẢN ĐẾN NÂNG CAO.",
+  nganh: "Trí tuệ nhân tạo ứng dụng.",
+  gvhd: "……………………………………",
+  sinhVien: [
+    ["……………………………………","……………………","……………………"],
+    ["……………………………………","……………………","……………………"],
+    ["……………………………………","……………………","……………………"]
+  ],
+  nam: "2026",
+};
+
 const TITLE="BÀI TẬP ỨNG DỤNG", TOPIC="ỨNG DỤNG AI TRONG PHÂN TÍCH DỮ LIỆU";
 const doc=new Document({
  numbering:{config:[
@@ -16,33 +31,14 @@ const doc=new Document({
     run:{size:SZ_H1,bold:true,font:FONT,color:C.white},paragraph:{spacing:{before:240,after:200},outlineLevel:0}},
    {id:"Heading2",name:"Heading 2",basedOn:"Normal",next:"Normal",quickFormat:true,
     run:{size:28,bold:true,font:FONT,color:C.accent},paragraph:{spacing:{before:200,after:120},outlineLevel:1}}]},
- sections:[{
+ sections:[
+ { properties: hutechCoverPageProps(), children: hutechCover(_COVER) },
+ {
   properties:{page:{size:{width:PW,height:PH},margin:{top:MT,right:MR,bottom:MB,left:ML}}},
   headers:{default:makeHeader(`${TITLE} — ${TOPIC}`)},
   footers:{default:makeFooter("Bài tập ứng dụng — Ứng dụng AI trong phân tích dữ liệu")},
   children:[
-/* BÌA */
-sp(620),
-new Paragraph({children:[T("MÔN TRÍ TUỆ NHÂN TẠO ỨNG DỤNG",{size:24,bold:true,color:C.gray})],
- alignment:AlignmentType.CENTER,spacing:{after:60}}),
-new Paragraph({children:[T(TITLE,{size:44,bold:true,color:C.navy})],
- alignment:AlignmentType.CENTER,spacing:{after:60}}),
-new Paragraph({children:[T("TỪ CƠ BẢN ĐẾN NÂNG CAO",{size:48,bold:true,color:C.accent})],
- alignment:AlignmentType.CENTER,shading:{fill:C.exBg,type:ShadingType.CLEAR},spacing:{before:80,after:80}}),
-new Paragraph({children:[T("18 bài tập · 4 cấp độ · làm trên dữ liệu thật",{size:26,color:C.gray,italics:true})],
- alignment:AlignmentType.CENTER,spacing:{after:280}}),
-twoColTable([
- ["Số bài tập","18 bài, chia 4 cấp độ"],
- ["Dữ liệu sử dụng","Hai bộ dữ liệu thật kèm theo tài liệu"],
- ["Tài liệu đi kèm","Giáo trình Ứng dụng AI trong phân tích dữ liệu"],
- ["Đối tượng","Người mới bắt đầu → trình độ nâng cao"],
- ["Đáp án","Có phụ lục đáp án đã kiểm chứng ở cuối tài liệu"],
- ["Đơn vị biên soạn","……………………………………"],
- ["Giảng viên phụ trách","……………………………………"],
-],3200,CW-3200),
-sp(220),
-body("Tóm tắt: Tập bài tập này đi kèm giáo trình Ứng dụng AI trong phân tích dữ liệu. Toàn bộ 18 bài đều làm trên hai bộ dữ liệu thật kèm theo, nên mọi kết quả đều kiểm chứng được. Phụ lục cuối tài liệu cung cấp đáp án với các con số đã được tính lại bằng Python, giúp người học tự đối chiếu và giúp giảng viên chấm nhanh."),
-PB(),
+
 
 /* MỤC LỤC */
 new Paragraph({children:[new TextRun({text:"MỤC LỤC",font:FONT,size:36,bold:true,color:C.black})],
