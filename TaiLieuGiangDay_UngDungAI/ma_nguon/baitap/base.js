@@ -6,7 +6,9 @@ const {
 } = require("docx");
 
 const PW = 11906, PH = 16838;
-const ML = 1800, MR = 1260, MT = 1440, MB = 1440;
+/* Le chuan HUTECH: Tren 2,0cm · Duoi 2,0cm · Trai 3,0cm · Phai 2,0cm
+   Quy doi DXA (1 inch = 2,54cm = 1440 DXA): 2,0cm = 1134 · 3,0cm = 1701 */
+const ML = 1701, MR = 1134, MT = 1134, MB = 1134;
 const CW = PW - ML - MR;
 const FONT = "Times New Roman";
 const SZ = 28, SZ_H1 = 32, SZ_H2 = 28, SZ_CODE = 22;

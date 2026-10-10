@@ -9,7 +9,8 @@ const fs = require("fs"), path = require("path");
 
 const FONT = "Times New Roman";
 const PW = 11906, PH = 16838;
-const ML = 1700, MR = 1300, MT = 1300, MB = 1300;
+/* Le chuan HUTECH: Tren/Duoi/Phai 2,0cm = 1134 DXA · Trai 3,0cm = 1701 DXA */
+const ML = 1701, MR = 1134, MT = 1134, MB = 1134;
 const CW = PW - ML - MR;
 
 /* Thuộc tính trang bìa: khung viền đôi màu đen bao quanh */
