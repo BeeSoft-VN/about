@@ -10,7 +10,8 @@ nền về dữ liệu hay lập trình.
 |---|---|
 | `GiaoTrinh_UngDungAI_PhanTichDuLieu.docx` | **Giáo trình 28 trang** — 6 chương, chuẩn IEEE Std 1063-2001, Times New Roman 14pt, mục lục dot-leader, **30 bài tập** phân cấp Dễ/TB/Khó |
 | `BaiGiang_UngDungAI_PhanTichDuLieu.pptx` | **Bài giảng 23 slide** — có ghi chú người nói đầy đủ cho cả 23 slide |
-| `ma_nguon/` | Mã JavaScript sinh ra hai tệp trên (sửa nội dung rồi chạy lại) |
+| `BaiTapUngDung_CoBan_den_NangCao.docx` | **Tập bài tập 37 trang** — 18 bài chia 4 cấp độ, làm trên dữ liệu thật, có **phụ lục đáp án đã kiểm chứng** |
+| `ma_nguon/` | Mã JavaScript sinh ra ba tệp trên (sửa nội dung rồi chạy lại) |
 
 ## Cấu trúc 6 chương
 
@@ -45,6 +46,25 @@ Người học cần biết AI sai ở đâu, không chỉ biết AI làm đư�
 Mở `GiaoTrinh_UngDungAI_PhanTichDuLieu.docx`, điền vào **bảng trang bìa**:
 - Đơn vị biên soạn
 - Giảng viên phụ trách
+
+## Tập bài tập ứng dụng
+
+18 bài chia 4 cấp độ, tất cả làm trên hai bộ dữ liệu thật trong kho tài liệu
+(`BaiTap_PhanTichTamLyHoc/du_lieu/` và `PhanTich_TuKy_TreEm/du_lieu/`).
+
+| Cấp độ | Bài | Mục tiêu |
+|---|---|---|
+| 1 — Cơ bản | 1–5 | Mở dữ liệu, hỏi AI đúng câu, hình thành thói quen kiểm chứng |
+| 2 — Trung bình | 6–10 | Làm sạch dữ liệu, so sánh nhóm, kiểm định, xếp hạng yếu tố |
+| 3 — Nâng cao | 11–15 | Phát hiện biến nhân bản, rò rỉ nhãn, tương tác, độ ổn định |
+| 4 — Thử thách | 16–18 | Phản biện, dự án hoàn chỉnh, đề xuất can thiệp |
+
+Mỗi bài có: bối cảnh, yêu cầu đánh số, sản phẩm nộp, gợi ý, và **bảng tiêu chí chấm
+thang 10** (đã kiểm tra bằng script: cả 18 bảng đều cộng đúng 10 điểm).
+
+**Phụ lục đáp án** nằm ở cuối tài liệu (từ trang 29). Mọi con số trong đó được tính lại
+bằng Python trên chính hai tệp dữ liệu kèm theo — xem `ma_nguon/baitap/dapan.py`.
+Nếu phát tài liệu cho người học tự làm, hãy xóa phụ lục này trước khi in.
 
 ## Thời lượng gợi ý
 
